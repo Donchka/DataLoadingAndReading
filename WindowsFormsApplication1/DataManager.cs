@@ -82,12 +82,15 @@ namespace WindowsFormsApplication1
             writer.Close();
         }
 
-        public void selectList(ListBox liBox,ListBox liBox2)
+        public void selectList(ListBox liBox,ListBox liBox2,Boolean voter)
         {
             //string curItem = liBox.SelectedItem.ToString();
             if (liBox.SelectedItem != null)
             {
-                liBox2.Items.Add(liBox.SelectedItem);
+                if (voter == true)
+                {
+                    liBox2.Items.Add(liBox.SelectedItem);
+                }
                 liBox.Items.Remove(liBox.SelectedItem);
             }
         }

@@ -23,12 +23,15 @@ namespace WindowsFormsApplication1
         public int startValue;
         public string file;
         public Boolean header = false;
+        public Boolean voterSet;
+        public int initialCount;
+        public int currentCount;
 
         private void LoadData_Click(object sender, EventArgs e)
         {
             file = textBox1.Text;
            
-            Console.WriteLine(header);
+            //Console.WriteLine(header);
             if (header == true)
             {
                 data = dataHandler.readAllData(file);
@@ -39,6 +42,8 @@ namespace WindowsFormsApplication1
                 data = dataHandler.readSomeData(file, 2, count);
             }
             dataHandler.loadAllDataToTextBox(data, listBox1);
+            initialCount = listBox1.Items.Count;
+            voterSet = false;
             listBox2.Items.Clear();
         }
 
@@ -77,12 +82,16 @@ namespace WindowsFormsApplication1
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //try
-           // {
+            currentCount = listBox1.Items.Count;
+
+            if (listBox1.SelectedItem != null&& initialCount==currentCount)
+            {
                 textBox2.AppendText(listBox1.SelectedItem.ToString());
-           // } catch(Exception) { }
-           // MessageBox.Show("Break!");
-            dataHandler.selectList(listBox1, listBox2);  
+                textBox3.AppendText(listBox1.SelectedItem.ToString() + ".txt");
+            }
+
+            dataHandler.selectList(listBox1, listBox2,voterSet);
+            voterSet = true;
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
