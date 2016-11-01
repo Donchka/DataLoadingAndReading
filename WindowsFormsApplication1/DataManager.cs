@@ -10,6 +10,7 @@ namespace WindowsFormsApplication1
 {
     class DataManager
     {
+
         public string[] readAllData(string fileName)
         {
             try
@@ -18,14 +19,14 @@ namespace WindowsFormsApplication1
             }
             catch(Exception e)
             {
-                return File.ReadAllLines(fileName + ".txt");
+                return File.ReadAllLines(fileName + ".csv");
             }
         }
 
 
         public string [] readSomeData(string fileName,decimal start,decimal num)
         {
-            StreamReader r = new StreamReader(fileName + ".txt");
+            StreamReader r = new StreamReader(fileName + ".csv");
             string[] data = new string[(int)num];
             int i = 0;
             string temp = "";
@@ -52,15 +53,15 @@ namespace WindowsFormsApplication1
             return data;
         }
 
-        public void loadAllDataToTextBox(string[] data,TextBox box)
+        public void loadAllDataToTextBox(string[] data,ListBox box)
         {
-            box.Clear();
+            box.Items.Clear();
             foreach(string d in data)
             {
                 if (d != null)
                 {
-                    box.AppendText(d);
-                    box.AppendText("\r\n");
+                    box.Items.Add(d);
+                    //box.Items.Add("\r\n");
                 }
             }
         }
@@ -79,6 +80,16 @@ namespace WindowsFormsApplication1
 
             }
             writer.Close();
+        }
+
+        public void selectList(ListBox liBox,ListBox liBox2)
+        {
+            //string curItem = liBox.SelectedItem.ToString();
+            if (liBox.SelectedItem != null)
+            {
+                liBox2.Items.Add(liBox.SelectedItem);
+                liBox.Items.Remove(liBox.SelectedItem);
+            }
         }
     }
 }
