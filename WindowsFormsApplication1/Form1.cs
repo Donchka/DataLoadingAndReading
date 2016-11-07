@@ -33,6 +33,8 @@ namespace WindowsFormsApplication1
 
             try
             {
+                textBox2.Text = "";
+                
                 if (file == null)
                 {
                     file = textBox1.Text;
