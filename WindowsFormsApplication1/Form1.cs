@@ -23,23 +23,36 @@ namespace WindowsFormsApplication1
         public int startValue;
         public string file;
         public Boolean header = false;
+        public Boolean wheader = false;
         public Boolean voterSet;
         public int initialCount;
         public int currentCount;
 
         private void LoadData_Click(object sender, EventArgs e)
         {
-            file = textBox1.Text;
-           
-            //Console.WriteLine(header);
-            if (header == true)
+
+            try
             {
-                data = dataHandler.readAllData(file);
-                
-            }else
+                if (file == null)
+                {
+                    file = textBox1.Text;
+                }
+                //saveFileDialog1.FileName = file;
+                //Console.WriteLine(header);
+
+                if (header == true)
+                {
+                    data = dataHandler.readAllData(file);
+                }
+                else
+                {
+                    int count = File.ReadLines(file).Count();
+                    data = dataHandler.readSomeData(file, 2, count);
+                }
+        }catch(Exception)
             {
-                int count = File.ReadLines(file + ".csv").Count();
-                data = dataHandler.readSomeData(file, 2, count);
+                MessageBox.Show("Please enter the file name you are loading.");
+                return;
             }
             dataHandler.loadAllDataToTextBox(data, listBox1);
             initialCount = listBox1.Items.Count;
@@ -77,20 +90,21 @@ namespace WindowsFormsApplication1
 
         private void button2_Click(object sender, EventArgs e)
         {
-            dataHandler.writeAllDataToFile("test", data);
+            saveFileDialog1.FileName = textBox2.Text;
+            saveFileDialog1.ShowDialog();
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             currentCount = listBox1.Items.Count;
 
-            if (listBox1.SelectedItem != null&& initialCount==currentCount)
+            if (listBox1.SelectedItem != null && initialCount == currentCount)
             {
                 textBox2.AppendText(listBox1.SelectedItem.ToString());
-                textBox3.AppendText(listBox1.SelectedItem.ToString() + ".txt");
+                //textBox3.AppendText(listBox1.SelectedItem.ToString() + ".txt");
             }
 
-            dataHandler.selectList(listBox1, listBox2,voterSet);
+            dataHandler.selectList(listBox1, listBox2, voterSet);
             voterSet = true;
         }
 
@@ -107,6 +121,37 @@ namespace WindowsFormsApplication1
             {
                 header = false;
             }
+        }
+
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            string writeHeader;
+            writeHeader = checkBox2.CheckState.ToString();
+
+            if (writeHeader.Equals("Checked"))
+            {
+                wheader = true;
+            }
+            else if (writeHeader.Equals("Unchecked"))
+            {
+                wheader = false;
+            }
+        }
+
+        private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+            dataHandler.writeAllDataToFile(saveFileDialog1.FileName,wheader,listBox2);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.ShowDialog();
+        }
+
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+            file = openFileDialog1.SafeFileName;
         }
     }
 }

@@ -11,13 +11,16 @@ namespace WindowsFormsApplication1
     class DataManager
     {
 
+        public string head = "";
+        public List<String> selectedData = new List<String>();
+
         public string[] readAllData(string fileName)
         {
             try
             {
                 return File.ReadAllLines(fileName);
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 return File.ReadAllLines(fileName + ".csv");
             }
@@ -26,17 +29,17 @@ namespace WindowsFormsApplication1
 
         public string [] readSomeData(string fileName,decimal start,decimal num)
         {
-            StreamReader r = new StreamReader(fileName + ".csv");
+            StreamReader r = new StreamReader(fileName);
             string[] data = new string[(int)num];
             int i = 0;
             string temp = "";
 
             for (i = 0; i < start - 1; i++)
             {
-                if (r.ReadLine() != null)
-                {
-                    temp = r.ReadLine();
-                }
+                //if (r.ReadLine() != null)
+               // {
+                    head = r.ReadLine();
+               // }
             }
 
             for (int j = 0; j<num/*Math.Min(num+start,data.Length-1)*/;j++)
@@ -71,13 +74,28 @@ namespace WindowsFormsApplication1
             //se.con
         }
 
-        public void writeAllDataToFile(string fileName,string[] data)
+        public void writeAllDataToFile(string fileName,Boolean w,ListBox LiBox2)
         {
             StreamWriter writer = new StreamWriter(fileName);
-            foreach (string d in data)
+
+            int x = 0;
+
+            //OR selectedData.AddRange(LiBox2.Items.Cast<string>());
+
+            foreach (string l in LiBox2.Items)
+            {
+                selectedData.Add(l);
+                ++x;
+            }
+
+            if (w)
+            {
+                writer.WriteLine(head);
+            }
+
+            foreach (string d in selectedData)
             {
                 writer.WriteLine(d);
-
             }
             writer.Close();
         }
