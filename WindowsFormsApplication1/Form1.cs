@@ -20,6 +20,7 @@ namespace WindowsFormsApplication1
 
         public string[] data;
         DataManager dataHandler = new DataManager();
+        Students sd = new Students();
         public int startValue;
         public string file;
         public Boolean header = false;
@@ -60,6 +61,7 @@ namespace WindowsFormsApplication1
             initialCount = listBox1.Items.Count;
             voterSet = false;
             listBox2.Items.Clear();
+            sd.getStudents();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)

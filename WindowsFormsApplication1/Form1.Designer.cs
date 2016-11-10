@@ -50,6 +50,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.button3 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
+            this.button4 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             this.SuspendLayout();
@@ -242,11 +243,21 @@
             this.label5.TabIndex = 23;
             this.label5.Text = "or";
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(774, 32);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(111, 20);
+            this.button4.TabIndex = 24;
+            this.button4.Text = "Generate Team";
+            this.button4.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(904, 346);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.progressBar1);
@@ -300,6 +311,7 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button button4;
     }
 }
 
